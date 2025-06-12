@@ -1,4 +1,4 @@
-# React CI/CD Pipeline mit Docker und GitHub Actions
+# React CI/CD Pipeline mit Docker & GitHub Actions
 
 Dieses Projekt demonstriert eine vollständige CI/CD-Pipeline für eine Vite-basierte React-Anwendung. Die App wird automatisch in einem Docker Image verpackt und in eine Docker Hub Registry gepusht – mithilfe von **GitHub Actions**, einem **Multi-Stage Dockerfile** und **sicheren Secrets**.
 
