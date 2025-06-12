@@ -1,12 +1,54 @@
-# React + Vite
+# React CI/CD Pipeline mit Docker und GitHub Actions
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dieses Projekt demonstriert eine vollständige CI/CD-Pipeline für eine Vite-basierte React-Anwendung. Die App wird automatisch in einem Docker Image verpackt und in eine Docker Hub Registry gepusht – mithilfe von **GitHub Actions**, einem **Multi-Stage Dockerfile** und **sicheren Secrets**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Projektstruktur
 
-## Expanding the ESLint configuration
+react-ci-cd-pipeline/
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+├── frontend/             # Vite React App
+
+│   └── Dockerfile        # Multi-Stage Dockerfile 
+(Node + nginx)
+
+├── .github/workflows/
+
+│   └── docker.yml       # CI-Workflow zum Bauen & Pushen
+
+└── README.md
+
+
+---
+
+## CI/CD Ablauf (GitHub Actions)
+
+Die CI-Pipeline wird bei jedem Push in den Haupt-Branch automatisch ausgeführt. Der Ablauf:
+
+1.  **Checkout** des Codes
+2.  **Login** bei Docker Hub über gespeicherte Secrets
+3.  **Bau** eines Multi-Stage Docker Images
+4.  **Push** des Images in das Docker Hub Repository
+
+Das Image wird eindeutig mit dem **Git-Commit-Hash** getaggt.
+
+---
+
+## Verwendete Secrets
+
+Die folgenden Secrets wurden im GitHub-Repository unter _Settings → Secrets → Actions_ hinterlegt:
+
+| Name               | Beschreibung                      |
+| :----------------- | :-------------------------------- |
+| `DOCKERHUB_USERNAME` | Docker Hub Benutzername           |
+| `DOCKERHUB_TOKEN`    | Docker Hub Access Token (Sicher!) |
+
+---
+
+## Dockerfile (Multi-Stage)
+
+Das Dockerfile besteht aus zwei Stages:
+
+-   **Builder** (Node 24 Alpine): Führt `npm ci` und `npm run build` aus
+-   **Runner** (nginx:alpine): Dient als schlanker Webserver für die `dist/`-Dateien
