@@ -2,7 +2,7 @@ name: Build & Push Docker Image
 
 on:
   push:
-    branches: [main]  
+    branches: [main]
 
 jobs:
   build-and-push:
@@ -26,4 +26,4 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/react-ci-cd-pipeline:${{ github.sha }}
+          tags: yaceylan/react-ci-cd-pipeline:${{ github.sha }}
