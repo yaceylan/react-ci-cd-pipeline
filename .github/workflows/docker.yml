@@ -26,4 +26,5 @@ jobs:
         with:
           context: ./frontend
           push: true
-          tags: yaceylan/react-ci-cd-pipeline:${{ github.sha }}
+          tags: yaceybln/react-ci-cd-pipeline:${{ github.sha }}
+
