@@ -8,14 +8,20 @@ Dieses Projekt demonstriert eine vollständige CI/CD-Pipeline für eine Vite-bas
 
 react-ci-cd-pipeline/
 
-├── frontend/             # Vite React App
+├── frontend/               # Vite React App
 
-│   └── Dockerfile        # Multi-Stage Dockerfile 
+│   └── Dockerfile          # Multi-Stage Dockerfile 
 (Node + nginx)
 
-├── .github/workflows/
+├── .github/
 
-│   └── docker.yml       # CI-Workflow zum Bauen & Pushen
+│   └── workflows/
+
+│       └── docker.yml      # CI-Workflow zum Bauen & Pushen
+
+├── screenshots/            # Nachweisbilder
+
+├── Reflexion.md            # Schriftliche Reflexion
 
 └── README.md
 
@@ -52,3 +58,11 @@ Das Dockerfile besteht aus zwei Stages:
 
 -   **Builder** (Node 24 Alpine): Führt `npm ci` und `npm run build` aus
 -   **Runner** (nginx:alpine): Dient als schlanker Webserver für die `dist/`-Dateien
+
+## Nachweise
+
+### Erfolgreicher GitHub Actions Workflow
+![CI-Workflow erfolgreich](./screenshots/ci-success.png)
+
+### Docker Hub Image mit Commit-Tag
+![Docker Hub Image](./screenshots/dockerhub-image.png)
